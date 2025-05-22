@@ -1,0 +1,12 @@
+[
+    {"word": "혼인신고", "pronunciation": "호닌신고", "noisy_input": "honinshingo"},
+    {"word": "심장", "pronunciation": "심장", "noisy_input": "simjang"},
+    {"word": "혈액", "pronunciation": "혀랙", "noisy_input": "hyeoraek"},
+    {"word": "애정", "pronunciation": "애정", "noisy_input": "aejeong"},
+    {"word": "연구소", "pronunciation": "연구소", "noisy_input": "yeongguso"},
+    {"word": "공식문서", "pronunciation": "공식문서", "noisy_input": "gongsikmunseo"},
+    {"word": "대통령", "pronunciation": "대통녕", "noisy_input": "daetongnyeong"},
+    {"word": "민원", "pronunciation": "미눤", "noisy_input": "minwon"},
+    {"word": "법률", "pronunciation": "범뉼", "noisy_input": "beomnyul"},
+    {"word": "의학", "pronunciation": "의학", "noisy_input": "uihak"}
+]
