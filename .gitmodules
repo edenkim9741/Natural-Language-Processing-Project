@@ -1,5 +1,5 @@
 [submodule "g2pK"]
-	path = g2pk
+	path = g2pK
 	url = https://github.com/edenkim9741/g2pK.git
 	branch = main
 
