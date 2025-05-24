@@ -238,3 +238,5 @@ cython_debug/
 *.code-workspace
 
 crack-flight-436213-c9-3bb0057a97ed.json
+
+data/
