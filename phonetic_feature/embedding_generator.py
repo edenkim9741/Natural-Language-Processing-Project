@@ -26,7 +26,7 @@ class PhoneticEmbeddingGenerator:
         self.model.eval()   ## 추론 전용으로 일단 돌림
 
     def synthesize_tts(self, text: str, base_filename: str):
-        """mp3 파일에서 wav 파일로의 변환환"""
+        """mp3 파일에서 wav 파일로의 변환"""
         # 경로 생성하기
         mp3_path = os.path.join(self.mp3_dir, f"{base_filename}.mp3")
         wav_path = os.path.join(self.wav_dir, f"{base_filename}.wav")
