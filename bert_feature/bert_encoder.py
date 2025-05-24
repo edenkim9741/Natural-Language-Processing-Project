@@ -2,8 +2,9 @@ import torch
 from transformers import BertModel, BertTokenizer
 import numpy as np
 import argparse
+import torch.nn as nn
 
-class BertFeatureExtractor:
+class BertFeatureExtractor(nn.Module):
     def __init__(self, model_name="bert-base-multilingual-cased"):
         """
         BERT 모델을 이용한 Feature Extractor 초기화
@@ -12,6 +13,7 @@ class BertFeatureExtractor:
             model_name (str): 사용할 BERT 모델 이름 
                               (기본값: bert-base-multilingual-cased - 다국어 지원)
         """
+        super(BertFeatureExtractor, self).__init__()
         # GPU 사용 가능 여부 확인
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"Using device: {self.device}")
@@ -73,7 +75,7 @@ class BertFeatureExtractor:
             raise ValueError("pooling_strategy는 'cls', 'mean', 'max' 중 하나여야 합니다.")
             
         # CPU로 이동 후 numpy 배열로 변환
-        return embeddings.cpu().numpy()
+        return embeddings
 
 
 # 사용 예시
