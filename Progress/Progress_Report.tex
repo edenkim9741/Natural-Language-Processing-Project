@@ -93,7 +93,7 @@
 % nouns, adverbs, adjectives should be capitalized, including both words in hyphenated terms, while
 % articles, conjunctions, and prepositions are lower case unless they
 % directly follow a colon or long dash
-\title{발음 기반 한글 단어 Retrieval \\
+\title{발음 기반 한글 자연어 처리 Encoder \\
         Progress Report}
 \author{
     % %Authors
@@ -172,7 +172,7 @@
 
 \begin{abstract}
 한국어 학습자에게 있어 한글 발음과 실제 표기 간의 차이는 큰 장벽이 될 수 있다. 
-특히 한국어는 음운 변화가 복잡하여 발음과 표기가 일치하지 않는 경우가 많다. 이러한 문제를 해결하기 위해, 본 프로젝트에서는 발음 기반의 단어 검색 시스템을 개발하고자 한다. 
+특히 한국어는 음운 변화가 복잡하여 발음과 표기가 일치하지 않는 경우가 많다. 이러한 문제를 해결하기 위해, 본 프로젝트에서는 기존의 Text Encoder와 Phonetic Encoder를 결합한 FeatureFusion을 설계하고, 이를 통해 발음 정보를 포함한 한국어 처리를 가능하게 하는 시스템을 개발하고자 한다. 
 이를 위해, 한국어 발음을 벡터화하여 유사 발음을 가진 단어들끼리 가까운 벡터 공간에 위치하도록 하는 Phonetic Encoder를 설계하였다. 
 또한 발음대로 잘못 표기된 단어 데이터셋 구축을 위해 G2PK\cite{park2019g2pk}를 변형하여 올바르게 표기된 문장에 대해 발음 기반으로 잘못 표기된 단어를 생성하는 시스템을 개발하였다.
 본 보고서는 중간 진행 상황을 공유하고, 향후 연구 방향을 제시하는 것을 목적으로 한다. 코드는 \url{https://github.com/edenkim9741/Natural-Language-Processing-Project.git}에서 확인할 수 있다.
@@ -208,7 +208,7 @@ Appendix G2PK Rule\ref{sec:g2pk_rule}에서 G2PK의 변형 규칙을 확인할 �
 특히 소리나는대로 표기되었더라도 기존 단어와 형태가 변하지 않는 경우에는 Text Encoder로 처리되었을 때 기존 단어와 동일한 Token과 Embedding Vector를 가진다. 
 예를 들어, `사과'라는 단어는 소리나는대로 표기하더라도 `사과'이므로 동일한 Token과 Embedding Vector를 가진다.
 
-본 프로젝스에서 활용한 BertEncoder는 문장의 맥락적인 정보를 파악할 수 있기 때문에 주변의 단어를 통해서 발음대로 표기된 단어의 의미를 유추할 수 있다.
+본 프로젝트에서 활용한 BertEncoder는 문장의 맥락적인 정보를 파악할 수 있기 때문에 주변의 단어를 통해서 발음대로 표기된 단어의 의미를 유추할 수 있다.
 
 \subsection{Phonetic Encoder}
 Phonetic Encoder는 텍스트로부터 생성된 음성의 발음 정보를 추출하여 고정된 벡터로 변환해주는 모듈이다.
@@ -231,7 +231,7 @@ Text Dataset은 올바른 한국어 문장을 통해 생성되었다. Dataset은
 \subsection{Phonetic Dataset}
 Phonetic Dataset은 Text Dataset의 문장을 TTS(Text-to-Speech)를 통해 음성으로 변환한 wav 파일과 해당 wav 파일을 Wav2Vec2를 통해 벡터화한 결과로 구성된다.
 gTTS의 제한으로 인해 현재 약 1600개의 문장에 대한 wav 파일만 생성되었으며, 추후에 다른 TTS 모델을 활용하여 나머지 문장에 대한 wav 파일을 생성할 예정이다.
-또한 TTS의 음색을 달리하여 다양한 발음 정보를 포함한 wav 파일을 생성해보고 해당 데이터를 활요했을 때에 대한 실험도 진행할 예정이다.
+또한 TTS의 음색을 달리하여 다양한 발음 정보를 포함한 wav 파일을 생성해보고 해당 데이터를 활용했을 때에 대한 실험도 진행할 예정이다.
 
 \section{Methods}
 
@@ -289,7 +289,7 @@ Wav2Vec2 기반의 발음 임베딩 생성을 위해, 먼저 torchaudio를 활�
 \subsubsection{Phonetic Encoder}
 Phonetic Encoder는 Wav2Vec2로부터 추출된 시퀀스 벡터를 입력으로 받아 GRU 기반의 RNN을 통해 시퀀스 벡터를 처리한다.
 최종적으로 처리된 벡터는 Phonetic Vector $\mathbf{v}_p$로 표현되며, 이는 발음 정보를 포함한 고정된 크기의 벡터이다. 이 벡터는 발음 기반의 유사도 비교를 위해 사용된다.
-
+추후에는 GRU 기반의 RNN 외에도 Transformer 기반의 모델을 활용하여 성능을 비교하는 실험도 진행할 예정이다.
 
 \subsection{FeatureFusion}
 FeatureFusion은 BertEncoder와 PhoneticEncoder의 출력 벡터를 결합하여 최종 임베딩 벡터를 생성하는 모듈이다.
@@ -332,7 +332,52 @@ Encoder에서의 Feature가 얼마나 효과적으로 추출되었는지를 평�
     \label{tab:encoder_comparison}
 \end{table}
 
-비교 결과 Table \ref{tab:encoder_comparison}과 같이 Phonetic Encoder의 Feature Vector가 Text Encoder의 Feature Vector보다 평균 유사도가 높게 나타났다. 이 결과는 Phonetic Encoder가 Modified G2PK로 생성된 발음대로 잘못 표기된 단어들에 대해서 더 강건함을 보여준다. 
+비교 결과 Table \ref{tab:encoder_comparison}과 같이 Phonetic Encoder의 Feature Vector가 Text Encoder의 Feature Vector보다 평균 유사도가 높게 나타났다. 이 결과는 Phonetic Encoder가 Modified G2PK로 생성된 발음대로 잘못 표기된 단어들에 대해서 더 강건함을 보여준다.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.45\textwidth]{figures/tsne_text_embeddings.pdf}
+    \caption{Text Encoder의 Embedding Space}
+    \label{fig:tsne_text_encoder}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.45\textwidth]{figures/tsne_phonetic_embeddings.pdf}
+    \caption{Phonetic Encoder의 Embedding Space}
+    \label{fig:tsne_phonetic_encoder}
+\end{figure}
+
+\subsection{Text Encoder와 Phonetic Encoder의 Embedding Space 비교}
+단순 유사도를 비교하는 것은 negetive pair에 대한 유사도를 반영하고 있지 않기 때문에 t-SNE를 활용하여 서로 다른 문장 간의 거리를 유지하면서 Embedding Space를 효과적으로 생성하고 있는지 확인하였다. 
+Figure \ref{fig:tsne_text_encoder}와 Figure \ref{fig:tsne_phonetic_encoder}는 각각 20개의 문장에 대해 Text Encoder와 Phonetic Encoder로 추출한 Embedding Space를 시각화한 결과이다.
+
+결과를 살펴보면 
+
+\section{Future Plans}
+\subsection{Text Dataset 개선 및 Phonetic Dataset 확장}
+현재 Text Dataset은 랜덤하게 5개의 오류 문장을 생성하는 방식으로 구성되어 있지만 생성된 문장이 어떤 오류를 포함하고 있는지에 대한 정보는 없다. 
+json 파일에 어떠한 오류로부터 생성된 문장인지에 대한 정보를 추가하여, Downstream Task에서 어떤 오류에 대한 성능이 좋고 나쁜지에 대한 분석을 할 수 있도록 개선할 예정이다.
+
+또한 Phonetic Dataset은 API의 제한으로 인해 현재 약 1600개의 문장에 대한 wav 파일만 생성되었으며, 나머지 문장에 대한 wav 파일을 생성할 예정이다.
+
+\subsection{다양한 Text Encoder 적용}
+현재 구현한 BertEncoder 외에 HuggingFace에서 제공하는 다양한 Text Encoder, 특히 한국어에 특화된 Encoder를 활용하여 성능을 비교할 예정이다. 
+예를 들어, KoBERT, KoGPT 등의 모델이 발음 오류에 대한 강건성을 가지는지에 대해 집중적으로 실험할 예정이다.
+
+\subsection{Transformer 기반 Phonetic Encoder 적용}
+현재 GRU 기반의 Encoder도 Embedding Space를 확인했을 때 시각적으로는 좋은 성능을 확인할 수 있었지만, Downstream Task에는 적합하지 않은 Vecotor일 가능성이 있다. 
+따라서 Transformer 기반의 Encoder를 활용하여 Phonetic Encoder를 개선하고 Downstream Task에 대해서 어떤 변화가 있는지에 대해 실험할 예정이다.
+
+\subsection{Fusion Feature를 이용한 Downstream Task}
+현재 FeatureFusion은 구현은 되어 있지만 학습은 되어 있지 않은 상태이다. (Phonetic Dataset의 부족으로 인해) 추후에 Phonetic Dataset을 확장하고, BertEncoder와 PhoneticEncoder를 결합한 FeatureFusion을 학습시킬 예정이다.
+
+FeatureFusion에서 추출한 Embedding Vector $\mathbf{v}_f$를 활용하여 아래 Downstream Task에 대한 성능을 평가할 예정이다.
+\begin{itemize}
+    \item 번역: 발음대로 잘못 표기된 문장을 입력으로 받아 올바르게 번역하는 Task
+    \item 오류 교정: 한국어 학습자가 발음대로 잘못 표기한 단어를 입력으로 받아 해당 문장을 올바르게 재구성하는 모델을 학습할 예정이다.
+\end{itemize}
+
 
 \clearpage
 \section{Appendix}
