@@ -249,3 +249,6 @@ Dataset/*.csv
 
 logs/
 wandb/
+
+*.csv
+tokenized_dataset/
