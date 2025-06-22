@@ -16,7 +16,7 @@ can access below
 # model tests
 main.py를 실행하면 테스트를 해볼 수 있습니다.
 
-혹은 위의 Dataset을 다운받아 성능을 측정해볼 수 있습니다.
+혹은 위의 Dataset을 다운받아서 main_reconstruction.py, main_translation.py를 실행하여 성능을 측정해볼 수 있습니다.
 
 # Notion
 프로젝트를 진행하며 기록한 노션입니다.
