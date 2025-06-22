@@ -3,11 +3,14 @@ Natural Language Processing Project Repository
 
 # Weights
 can access below
+
 [reconstruction_weights](https://drive.google.com/file/d/1QNyqPWi6JWDHFDfN1_JnICsmvrEbCMTF/view?usp=sharing)
+
 [translation_weights](https://drive.google.com/file/d/1VsmE7eEBk7g95Dzmx8HLAxaYYgfUzYU_/view?usp=sharing)
 
 # Dataset
 can access below
+
 [tokenzied_weights](https://drive.google.com/file/d/1kRXOjNt2VPKsQv5fXTNGLR3O25lRa3Pj/view?usp=sharing)
 
 # model tests
