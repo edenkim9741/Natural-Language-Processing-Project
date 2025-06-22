@@ -240,3 +240,12 @@ cython_debug/
 crack-flight-436213-c9-3bb0057a97ed.json
 
 data/
+Dataset/full*
+Dataset/g2p*
+
+Dataset/*.csv
+
+*.pt
+
+logs/
+wandb/

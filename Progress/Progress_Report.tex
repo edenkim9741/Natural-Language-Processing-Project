@@ -352,7 +352,7 @@ Encoder에서의 Feature가 얼마나 효과적으로 추출되었는지를 평�
 단순 유사도를 비교하는 것은 negetive pair에 대한 유사도를 반영하고 있지 않기 때문에 t-SNE를 활용하여 서로 다른 문장 간의 거리를 유지하면서 Embedding Space를 효과적으로 생성하고 있는지 확인하였다. 
 Figure \ref{fig:tsne_text_encoder}와 Figure \ref{fig:tsne_phonetic_encoder}는 각각 20개의 문장에 대해 Text Encoder와 Phonetic Encoder로 추출한 Embedding Space를 시각화한 결과이다.
 
-결과를 살펴보면 
+결과를 살펴보면 Text Encoder의 경우 다른 문장과 더 가까운 거리를 가지는 sample이 존재하는 반면, Phonetic Encoder의 경우 발음이 유사한 문장들이 더 가까운 거리를 가지는 것을 확인할 수 있다.
 
 \section{Future Plans}
 \subsection{Text Dataset 개선 및 Phonetic Dataset 확장}

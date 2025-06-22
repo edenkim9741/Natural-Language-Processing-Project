@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from embedding_generator import PhoneticEmbeddingGenerator
+from .embedding_generator import PhoneticEmbeddingGenerator
 
 class PhoneticEncoder(nn.Module):
     """Phonetic Feature 학습용 인코더 제시
